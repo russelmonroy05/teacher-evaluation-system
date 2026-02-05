@@ -1,7 +1,7 @@
-# Ignore everything outside this repo folder
+# Ignore everything outside this repo
 ../../*
 
-# Ignore common files you don't need
+# Ignore common unnecessary files
 *.log
 *.sqlite3
 *.jpg
@@ -10,3 +10,9 @@
 *.docx
 *.xlsx
 *.pptx
+*.pyc
+__pycache__/
+*.env
+*.DS_Store
+# Ignore virtual environment
+venv/
