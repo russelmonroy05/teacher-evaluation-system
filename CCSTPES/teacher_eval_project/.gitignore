@@ -1,18 +1,20 @@
-# Ignore everything outside this repo
-../../*
+Django==4.2.0
+psycopg2-binary==2.9.6
+python-decouple==3.8
+Pillow==9.5.0
+django-storages==1.14.2
+boto3==1.28.0
+gunicorn==21.2.0
+whitenoise==6.5.0
+django-cors-headers==4.2.0
+dj-database-url==2.0.0
 
-# Ignore common unnecessary files
-*.log
-*.sqlite3
-*.jpg
-*.jpeg
-*.pdf
-*.docx
-*.xlsx
-*.pptx
-*.pyc
-__pycache__/
-*.env
-*.DS_Store
-# Ignore virtual environment
-venv/
+--- IGNORE ---
+# Requirements for teacher evaluation project
+Django==4.2
+psycopg2-binary==2.9.9
+python-decouple==3.8
+Pillow>=10.2.0
+gunicorn    
+--- IGNORE ---
+# End of requirements file
