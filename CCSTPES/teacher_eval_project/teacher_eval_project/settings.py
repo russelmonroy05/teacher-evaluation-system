@@ -2,12 +2,15 @@ from pathlib import Path
 import os
 from decouple import config, Csv
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment variables with fallbacks for local dev
 DEBUG = config('DEBUG', default=True, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-p2*^t-o($$&+$a-lo72g%5!aa*1y8%(jeh_up$rb_feb=74=8k')
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+
 
 
 INSTALLED_APPS = [
@@ -22,7 +25,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serve static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,12 +54,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'teacher_eval_project.wsgi.application'
 
 # Database - supports both local dev and Render/Railway deployment
+
+
 if 'DATABASE_URL' in os.environ:
     # Production: Use DATABASE_URL from Render/Railway
-    import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
+            engine='django.db.backends.postgresql_psycopg3',  # <-- Use psycopg3
             conn_max_age=600
         )
     }
@@ -64,7 +69,7 @@ else:
     # Development: Use local PostgreSQL
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg3',  # <-- Use psycopg3
             'NAME': config('DB_NAME', 'teacher_eval_db'),
             'USER': config('DB_USER', 'postgres'),
             'PASSWORD': config('DB_PASSWORD', 'pass@123'),
@@ -72,7 +77,6 @@ else:
             'PORT': config('DB_PORT', '5433'),
         }
     }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -146,7 +150,7 @@ else:
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "teacher_eval_project" / "static",
 ]
 
 # Security settings for production
