@@ -56,12 +56,12 @@ WSGI_APPLICATION = 'teacher_eval_project.wsgi.application'
 # Database - supports both local dev and Render/Railway deployment
 
 
+
 if 'DATABASE_URL' in os.environ:
     # Production: Use DATABASE_URL from Render/Railway
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
-            engine='django.db.backends.postgresql_psycopg3',  # <-- Use psycopg3
             conn_max_age=600
         )
     }
@@ -69,7 +69,7 @@ else:
     # Development: Use local PostgreSQL
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg3',  # <-- Use psycopg3
+            'ENGINE': 'django.db.backends.postgresql',  # <- corrected
             'NAME': config('DB_NAME', 'teacher_eval_db'),
             'USER': config('DB_USER', 'postgres'),
             'PASSWORD': config('DB_PASSWORD', 'pass@123'),
