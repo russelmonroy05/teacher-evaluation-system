@@ -17,7 +17,10 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-p2*^t-o($$&+$a-lo72g%
 # -----------------------------
 # ALLOWED HOSTS
 # -----------------------------
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='teacher-evaluation-system-jk08.onrender.com,localhost', cast=lambda v: [s.strip() for s in v.split(',')])
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Example: ALLOWED_HOSTS="teacher-evaluation-system-jk08.onrender.com,localhost"
 
 # -----------------------------
@@ -157,16 +160,16 @@ if USE_S3:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
     
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/staticfiles/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 else:
-    STATIC_URL = '/static/'
+    STATIC_URL = '/staticfiles/'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR / "teacher_eval_project" / "static",
+    BASE_DIR / "teacher_eval_project" / "staticfiles",
 ]
 
 # -----------------------------
